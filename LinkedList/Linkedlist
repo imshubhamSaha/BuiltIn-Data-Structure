@@ -1,0 +1,186 @@
+"use strict";
+
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+
+class LinkedList {
+  constructor() {
+    this.head = null;
+    this.len = 0;
+  }
+
+  insertStart(value) {
+    const node = new Node(value);
+
+    let temp = this.head;
+    this.head = node;
+    node.next = temp;
+    this.len++;
+  }
+
+  insertAt(index, value) {
+    if (typeof index !== "number" || index < 0 || index > this.len) {
+      console.log("Index not valid");
+      return;
+    }
+    const node = new Node(value);
+    let temp = this.head;
+    if (index === 0) {
+      this.head = node;
+      node.next = temp;
+    } else {
+      while (index - 1 > 0) {
+        temp = temp.next;
+        index--;
+      }
+      node.next = temp.next;
+      temp.next = node;
+    }
+    this.len++;
+    return this.len;
+  }
+
+  insertLast(value) {
+    const node = new Node(value);
+
+    if (this.len === 0) {
+      this.head = node;
+    } else {
+      let temp = this.head;
+      while (temp.next !== null) {
+        temp = temp.next;
+      }
+      temp.next = node;
+    }
+    this.len++;
+  }
+
+  deleteStart() {
+    if (this.isEmpty()) {
+      return -1;
+    }
+    let temp = this.head;
+
+    this.head = temp.next;
+    this.len--;
+    return temp.value;
+  }
+
+  deleteIndex(index) {
+    if (this.isEmpty()) {
+      return -1;
+    }
+
+    if (index < 0 || index >= this.len) {
+      return "Index Not Valid";
+    }
+
+    let cur = this.head;
+    let val;
+    if (index === 0) {
+      val = cur.value;
+      this.head = cur.next;
+    } else {
+      while (index - 1 > 0) {
+        cur = cur.next;
+        index--;
+      }
+      val = cur.next.value;
+      cur.next = cur.next.next;
+    }
+    this.len--;
+    return val;
+  }
+
+  deleteElement(element) {
+    if (this.isEmpty()) {
+      return -1;
+    }
+    let cur = this.head;
+    let prev = null;
+
+    while (cur) {
+      if (cur.value === element) {
+        if (prev === null) {
+          this.head = cur.next;
+          this.len--;
+          return cur.value;
+        } else {
+          prev.next = cur.next;
+          this.len--;
+          return cur.value;
+        }
+      }
+      prev = cur;
+      cur = cur.next;
+    }
+    return -1;
+  }
+
+  indexOf(element) {
+    if (this.isEmpty()) {
+      return -1;
+    }
+
+    let count = 0;
+    let temp = this.head;
+    while (temp) {
+      if (temp.value === element) {
+        return count;
+      }
+      count++;
+      temp = temp.next;
+    }
+    return -1;
+  }
+
+  deleteLast() {
+    if (this.isEmpty()) {
+      return -1;
+    }
+    let val;
+    let temp = this.head;
+    if (this.len === 0) {
+      val = temp.value;
+      this.head = null;
+    } else {
+      while (temp.next.next !== null) {
+        temp = temp.next;
+      }
+
+      val = temp.next.value;
+      temp.next = null;
+    }
+    this.len--;
+    return val;
+  }
+
+  //helper
+  isEmpty() {
+    return this.len === 0;
+  }
+
+  get size() {
+    console.log(this.len);
+  }
+
+  get printList() {
+    if (this.isEmpty()) {
+      console.log("Linked List is Empty");
+    }
+
+    let temp = this.head;
+
+    while (temp) {
+      console.log(temp.value);
+      temp = temp.next;
+    }
+  }
+}
+const li = new LinkedList();
+
+console.log(li);
