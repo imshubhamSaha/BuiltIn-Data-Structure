@@ -1,0 +1,55 @@
+"use strict";
+
+class MyQueue {
+  constructor() {
+    this.queue = [];
+    this.front = -1;
+    this.rear = -1;
+    this.len = 0;
+  }
+
+  isEmpty() {
+    if (this.front === -1 && this.rear === -1) {
+      return true;
+    }
+
+    return false;
+  }
+
+  get size() {
+    return this.len;
+  }
+
+  eneque(elm) {
+    if (this.front === -1 && this.rear === -1) {
+      this.front = this.front + 1;
+    }
+    this.rear = this.rear + 1;
+    this.queue[this.rear] = elm;
+    this.len = this.len + 1;
+  }
+
+  deque() {
+    if (this.isEmpty()) {
+      return -1;
+    }
+    let popped = this.queue[this.front];
+    if (this.front === this.rear) {
+      this.front = -1;
+      this.rear = -1;
+    } else {
+      this.front = this.front + 1;
+    }
+
+    this.len = this.len - 1;
+    return popped;
+  }
+
+  peek() {
+    if (this.isEmpty()) {
+      return -1;
+    }
+
+    return this.queue[this.front];
+  }
+}
